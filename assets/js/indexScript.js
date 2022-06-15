@@ -53,4 +53,18 @@ let questions = [
 
 let timeRemaining = 75;
 let isGameRunning = false;
+let isOnRecordingPage = false;
 let scores = 0;
+
+function handleClickOnStart(e) {
+
+}
+
+function handleClickOnChoice(e) {
+
+}
+
+function handleSubmitName(e) {
+
+}
+
