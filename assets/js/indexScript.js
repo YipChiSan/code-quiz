@@ -49,5 +49,8 @@ let questions = [
         choices: ["Syntax error", "Missing of semicolons", "Division by zero", "Missing of Bracket"],
         answer: 2,
     },
-
 ];
+
+let timeRemaining = 75;
+let isGameRunning = false;
+let scores = 0;
