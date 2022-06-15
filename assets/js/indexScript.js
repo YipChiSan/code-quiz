@@ -86,8 +86,13 @@ function displayQuestions() {
     //Create elements
     let questionTitle = document.createElement('h1');
     questionTitle.textContent = codeQuestion.question;
-
-    
+    document.appendChild(questionTitle);
+    for (let choice of codeQuestion.choices) {
+        let choiceEl = document.createElement('button');
+        choiceEl.textContent = choice;
+        choiceEl.addEventListener('click', handleClickOnChoice);
+        document.appendChild(choiceEl);
+    }
 }
 
 function handleClickOnChoice(e) {
