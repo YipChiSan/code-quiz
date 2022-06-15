@@ -57,6 +57,7 @@ let isOnRecordingPage = false;
 let scores = 0;
 let gameInterval;
 let currQuestionIndex = 0;
+document.querySelector('#start').addEventListener('click', handleClickOnStart);
 
 function handleClickOnStart(e) {
     initGame();
@@ -68,6 +69,7 @@ function handleClickOnStart(e) {
         } else if (timeRemaining === 0) {
             isGameRunning = false;
             timeRemaining = 75;
+            endGame();
         }
     }, 1000);
 }
@@ -80,18 +82,22 @@ function initGame() {
     displayQuestions();
 }
 
+function endGame() {
+    
+}
+
 function displayQuestions() {
     let codeQuestion = questions[currQuestionIndex];
 
     //Create elements
     let questionTitle = document.createElement('h1');
     questionTitle.textContent = codeQuestion.question;
-    document.appendChild(questionTitle);
+    document.body.appendChild(questionTitle);
     for (let choice of codeQuestion.choices) {
         let choiceEl = document.createElement('button');
         choiceEl.textContent = choice;
         choiceEl.addEventListener('click', handleClickOnChoice);
-        document.appendChild(choiceEl);
+        document.body.appendChild(choiceEl);
     }
 }
 
