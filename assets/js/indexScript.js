@@ -55,9 +55,39 @@ let timeRemaining = 75;
 let isGameRunning = false;
 let isOnRecordingPage = false;
 let scores = 0;
+let gameInterval;
+let currQuestionIndex = 0;
 
 function handleClickOnStart(e) {
+    initGame();
+    gameInterval = setInterval(function() {
+        if (timeRemaining > 0 && isGameRunning) {
+            let time = document.querySelector("#time");
+            time.textContent = timeRemaining;
+            timeRemaining--;
+        } else if (timeRemaining === 0) {
+            isGameRunning = false;
+            timeRemaining = 75;
+        }
+    }, 1000);
+}
 
+function initGame() {
+    isGameRunning = true;
+    document.querySelector('#title').style.display = 'none';
+    document.querySelector('#description').style.display = 'none';
+    document.querySelector('#start').style.display = 'none';
+    displayQuestions();
+}
+
+function displayQuestions() {
+    let codeQuestion = questions[currQuestionIndex];
+
+    //Create elements
+    let questionTitle = document.createElement('h1');
+    questionTitle.textContent = codeQuestion.question;
+
+    
 }
 
 function handleClickOnChoice(e) {
