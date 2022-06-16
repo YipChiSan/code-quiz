@@ -164,7 +164,6 @@ function handleSubmitName(e) {
 
         localStorage.setItem("record", JSON.stringify(record));
         location.href = 'highScore.html';
-        console.log(localStorage.getItem("record"));
     } else {
         alert("Please enter a non-empty name");
     }
