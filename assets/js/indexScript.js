@@ -51,13 +51,14 @@ let questions = [
     },
 ];
 
-let timeRemaining = 75;
+let timeRemaining = 60;
 let scores = 0;
 let gameInterval;
 let currQuestionIndex = 0;
 document.querySelector('button').addEventListener('click', handleClickOnStart);
 let questionAnswer;
 let resultTimeout;
+let userName;
 
 function handleClickOnStart(e) {
     initGame();
@@ -81,7 +82,7 @@ function endGame() {
     clearInterval(gameInterval);
     document.querySelector('#question').innerHTML = '';
 
-    timeRemaining = 75;
+    timeRemaining = 60;
     let titleEl = document.createElement('h1');
     titleEl.textContent = 'All done!';
 
@@ -105,7 +106,7 @@ function endGame() {
     formEl.appendChild(submitEl);
 
     document.querySelector('#description').appendChild(formEl);
-    
+
 }
 
 function displayQuestions() {
@@ -141,9 +142,6 @@ function handleClickOnChoice(e) {
         scores++;
         resultEl.textContent = "Correct!";
     } else {
-        if (scores > 0) {
-            scores--;
-        }
         resultEl.textContent = "Wrong!";
         timeRemaining = (timeRemaining >= 10) ? timeRemaining - 10 : 0;
         let time = document.querySelector("#time");
@@ -158,6 +156,22 @@ function handleClickOnChoice(e) {
 }
 
 function handleSubmitName(e) {
+    e.preventDefault();
+    
+    if (isEmpty(document.querySelector('input').value)) {
+        userName = document.querySelector('input').value;
+        let record = (localStorage.getItem("record") === null) ? [] : JSON.parse(localStorage.getItem("record"));
+        record.push([userName, scores]);
 
+        localStorage.setItem("record", JSON.stringify(record));
+        location.href = 'highScore.html';
+        console.log(localStorage.getItem("record"));
+    } else {
+        alert("Please enter a non-empty name");
+    }
+}
+
+function isEmpty(str) {
+    return str.trim().length;
 }
 
