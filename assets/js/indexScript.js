@@ -52,38 +52,60 @@ let questions = [
 ];
 
 let timeRemaining = 75;
-let isGameRunning = false;
-let isOnRecordingPage = false;
 let scores = 0;
 let gameInterval;
 let currQuestionIndex = 0;
-document.querySelector('#start').addEventListener('click', handleClickOnStart);
+document.querySelector('button').addEventListener('click', handleClickOnStart);
 let questionAnswer;
+let resultTimeout;
 
 function handleClickOnStart(e) {
     initGame();
     gameInterval = setInterval(function() {
-        if (timeRemaining > 0 && isGameRunning) {
+        if (timeRemaining > 0) {
             let time = document.querySelector("#time");
             time.textContent = timeRemaining;
             timeRemaining--;
-        } else if (timeRemaining === 0) {
+        } else if (timeRemaining <= 0) {
             endGame();
         }
     }, 1000);
 }
 
 function initGame() {
-    isGameRunning = true;
-    document.querySelector('#title').style.display = 'none';
-    document.querySelector('#description').style.display = 'none';
-    document.querySelector('#start').style.display = 'none';
+    document.querySelector('#description').innerHTML = '';
     displayQuestions();
 }
 
 function endGame() {
-    isGameRunning = false;
+    clearInterval(gameInterval);
+    document.querySelector('#question').innerHTML = '';
+
     timeRemaining = 75;
+    let titleEl = document.createElement('h1');
+    titleEl.textContent = 'All done!';
+
+    let subTitleEl = document.createElement('h2');
+    subTitleEl.textContent = "Your score is " + scores;
+
+    let formEl = document.createElement('form');
+    let labelEl = document.createElement('label');
+    labelEl.textContent = "Enter your name:";
+
+    let inputEl = document.createElement('input');
+    inputEl.setAttribute("type", "text");
+    inputEl.setAttribute('id', "name");
+
+    let submitEl = document.createElement('input');
+    submitEl.setAttribute('type', 'submit');
+    submitEl.addEventListener('click', handleSubmitName);
+
+    formEl.appendChild(labelEl);
+    formEl.appendChild(inputEl);
+    formEl.appendChild(submitEl);
+
+    document.querySelector('#description').appendChild(formEl);
+    
 }
 
 function displayQuestions() {
@@ -111,6 +133,8 @@ function displayQuestions() {
 }
 
 function handleClickOnChoice(e) {
+    document.querySelector('#result').innerHTML = '';
+    clearTimeout(resultTimeout);
     let selectedID = e.target.id;
     let resultEl = document.createElement('p');
     if (selectedID == questionAnswer) {
@@ -121,14 +145,14 @@ function handleClickOnChoice(e) {
             scores--;
         }
         resultEl.textContent = "Wrong!";
-        timeRemaining -= 10;
+        timeRemaining = (timeRemaining >= 10) ? timeRemaining - 10 : 0;
         let time = document.querySelector("#time");
         time.textContent = timeRemaining;
     }
     document.querySelector('#result').appendChild(resultEl);
-    setTimeout(function() {
+    resultTimeout = setTimeout(function() {
         document.querySelector('#result').innerHTML = '';
-    }, 1500)
+    }, 2000)
     displayQuestions();
     
 }
