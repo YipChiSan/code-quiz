@@ -58,7 +58,7 @@ let scores = 0;
 let gameInterval;
 let currQuestionIndex = 0;
 document.querySelector('#start').addEventListener('click', handleClickOnStart);
-let answer;
+let questionAnswer;
 
 function handleClickOnStart(e) {
     initGame();
@@ -68,8 +68,6 @@ function handleClickOnStart(e) {
             time.textContent = timeRemaining;
             timeRemaining--;
         } else if (timeRemaining === 0) {
-            isGameRunning = false;
-            timeRemaining = 75;
             endGame();
         }
     }, 1000);
@@ -84,29 +82,55 @@ function initGame() {
 }
 
 function endGame() {
-    
+    isGameRunning = false;
+    timeRemaining = 75;
 }
 
 function displayQuestions() {
-    let codeQuestion = questions[currQuestionIndex];
-
-    //Create elements
-    let questionTitle = document.createElement('h1');
-    questionTitle.textContent = codeQuestion.question;
-    document.body.appendChild(questionTitle);
-    answer = codeQuestion.answer;
-    for (let i = 0; i < codeQuestion.choices.length; i++) {
-        let choice = codeQuestion.choices[i];
-        let choiceEl = document.createElement('button');
-        choiceEl.textContent = choice;
-        choiceEl.addEventListener('click', handleClickOnChoice);
-        choiceEl.setAttribute('id', i);
-        document.body.appendChild(choiceEl);
+    document.querySelector('#question').innerHTML = '';
+    if (currQuestionIndex < questions.length) {
+        let codeQuestion = questions[currQuestionIndex];
+        currQuestionIndex++;
+        //Create elements
+        let questionTitle = document.createElement('h1');
+        questionTitle.textContent = codeQuestion.question;
+        document.querySelector('#question').appendChild(questionTitle);
+        questionAnswer = codeQuestion.answer;
+        for (let i = 0; i < codeQuestion.choices.length; i++) {
+            let choice = codeQuestion.choices[i];
+            let choiceEl = document.createElement('button');
+            choiceEl.textContent = choice;
+            choiceEl.addEventListener('click', handleClickOnChoice);
+            choiceEl.setAttribute('id', i);
+            document.querySelector('#question').appendChild(choiceEl);
+        }
+    } else {
+        endGame();
     }
+
 }
 
 function handleClickOnChoice(e) {
-
+    let selectedID = e.target.id;
+    let resultEl = document.createElement('p');
+    if (selectedID == questionAnswer) {
+        scores++;
+        resultEl.textContent = "Correct!";
+    } else {
+        if (scores > 0) {
+            scores--;
+        }
+        resultEl.textContent = "Wrong!";
+        timeRemaining -= 10;
+        let time = document.querySelector("#time");
+        time.textContent = timeRemaining;
+    }
+    document.querySelector('#result').appendChild(resultEl);
+    setTimeout(function() {
+        document.querySelector('#result').innerHTML = '';
+    }, 1500)
+    displayQuestions();
+    
 }
 
 function handleSubmitName(e) {
