@@ -3,7 +3,7 @@ backBtnEl.addEventListener('click', handleBackBtn);
 let ulEl = document.querySelector('ul');
 
 function handleBackBtn() {
-    location.href = 'index.html'
+    location.replace('index.html');
 }
 
 document.querySelector('#clear').addEventListener('click', function() {
@@ -19,7 +19,7 @@ for (let name in records) {
 }
 
 recordArray.sort(function(a, b) {
-    return a[1] - b[1];
+    return b[1] - a[1];
 });
 
 for (let record of recordArray) {
