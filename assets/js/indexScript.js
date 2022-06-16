@@ -58,6 +58,7 @@ let scores = 0;
 let gameInterval;
 let currQuestionIndex = 0;
 document.querySelector('#start').addEventListener('click', handleClickOnStart);
+let answer;
 
 function handleClickOnStart(e) {
     initGame();
@@ -93,10 +94,13 @@ function displayQuestions() {
     let questionTitle = document.createElement('h1');
     questionTitle.textContent = codeQuestion.question;
     document.body.appendChild(questionTitle);
-    for (let choice of codeQuestion.choices) {
+    answer = codeQuestion.answer;
+    for (let i = 0; i < codeQuestion.choices.length; i++) {
+        let choice = codeQuestion.choices[i];
         let choiceEl = document.createElement('button');
         choiceEl.textContent = choice;
         choiceEl.addEventListener('click', handleClickOnChoice);
+        choiceEl.setAttribute('id', i);
         document.body.appendChild(choiceEl);
     }
 }
