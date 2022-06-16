@@ -59,12 +59,12 @@ document.querySelector('button').addEventListener('click', handleClickOnStart);
 let questionAnswer;
 let resultTimeout;
 let userName;
+let time = document.querySelector("#time");
 
 function handleClickOnStart(e) {
     initGame();
     gameInterval = setInterval(function() {
         if (timeRemaining > 0) {
-            let time = document.querySelector("#time");
             time.textContent = timeRemaining;
             timeRemaining--;
         } else if (timeRemaining <= 0) {
@@ -144,13 +144,12 @@ function handleClickOnChoice(e) {
     } else {
         resultEl.textContent = "Wrong!";
         timeRemaining = (timeRemaining >= 10) ? timeRemaining - 10 : 0;
-        let time = document.querySelector("#time");
         time.textContent = timeRemaining;
     }
     document.querySelector('#result').appendChild(resultEl);
     resultTimeout = setTimeout(function() {
         document.querySelector('#result').innerHTML = '';
-    }, 2000)
+    }, 1500)
     displayQuestions();
     
 }
