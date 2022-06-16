@@ -159,9 +159,9 @@ function handleSubmitName(e) {
     
     if (isEmpty(document.querySelector('input').value)) {
         userName = document.querySelector('input').value;
-        let record = (localStorage.getItem("record") === null) ? [] : JSON.parse(localStorage.getItem("record"));
-        record.push([userName, scores]);
-
+        let record = (localStorage.getItem("record") === null) ? {} : JSON.parse(localStorage.getItem("record"));
+        
+        record[userName] = scores;
         localStorage.setItem("record", JSON.stringify(record));
         location.href = 'highScore.html';
     } else {
