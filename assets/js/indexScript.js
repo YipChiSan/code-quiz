@@ -85,13 +85,14 @@ function endGame() {
     timeRemaining = 60;
     let titleEl = document.createElement('h1');
     titleEl.textContent = 'All done!';
+    titleEl.style.marginLeft = '0';
 
     let subTitleEl = document.createElement('h2');
     subTitleEl.textContent = "Your score is " + scores;
 
     let formEl = document.createElement('form');
     let labelEl = document.createElement('label');
-    labelEl.textContent = "Enter your name:";
+    labelEl.textContent = "Enter your name: ";
 
     let inputEl = document.createElement('input');
     inputEl.setAttribute("type", "text");
@@ -99,12 +100,18 @@ function endGame() {
 
     let submitEl = document.createElement('input');
     submitEl.setAttribute('type', 'submit');
+    submitEl.setAttribute('id', 'submit');
+    submitEl.style.marginTop = "0";
+    submitEl.style.display = "inline";
+    submitEl.style.marginLeft = "20px";
     submitEl.addEventListener('click', handleSubmitName);
 
     formEl.appendChild(labelEl);
     formEl.appendChild(inputEl);
     formEl.appendChild(submitEl);
 
+    document.querySelector('#description').appendChild(titleEl);
+    document.querySelector('#description').appendChild(subTitleEl);
     document.querySelector('#description').appendChild(formEl);
 
 }
@@ -122,7 +129,9 @@ function displayQuestions() {
         for (let i = 0; i < codeQuestion.choices.length; i++) {
             let choice = codeQuestion.choices[i];
             let choiceEl = document.createElement('button');
-            choiceEl.textContent = choice;
+            choiceEl.style.width = "700px";
+            choiceEl.style.textAlign = "left";
+            choiceEl.textContent = (i + 1) + ": " + choice;
             choiceEl.addEventListener('click', handleClickOnChoice);
             choiceEl.setAttribute('id', i);
             document.querySelector('#question').appendChild(choiceEl);
@@ -138,6 +147,9 @@ function handleClickOnChoice(e) {
     clearTimeout(resultTimeout);
     let selectedID = e.target.id;
     let resultEl = document.createElement('p');
+    resultEl.style.borderTop = "solid";
+    resultEl.style.color = "#bfbfbf";
+    resultEl.style.fontStyle = "italic";
     if (selectedID == questionAnswer) {
         scores++;
         resultEl.textContent = "Correct!";
