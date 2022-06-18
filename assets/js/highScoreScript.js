@@ -1,6 +1,7 @@
 let backBtnEl = document.querySelector('#back');
 backBtnEl.addEventListener('click', handleBackBtn);
-let ulEl = document.querySelector('ul');
+let olEl = document.querySelector('ol');
+console.log(olEl);
 
 function handleBackBtn() {
     location.replace('index.html');
@@ -8,7 +9,7 @@ function handleBackBtn() {
 
 document.querySelector('#clear').addEventListener('click', function() {
     localStorage.clear();
-    ulEl.innerHTML = '';
+    olEl.innerHTML = '';
 });
 
 let records = JSON.parse(localStorage.getItem("record"));
@@ -25,5 +26,5 @@ recordArray.sort(function(a, b) {
 for (let record of recordArray) {
     let liEl = document.createElement('li');
     liEl.textContent = record[0] + ": " + record[1];
-    ulEl.appendChild(liEl);
+    olEl.appendChild(liEl);
 }
