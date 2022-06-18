@@ -1,7 +1,6 @@
 let backBtnEl = document.querySelector('#back');
 backBtnEl.addEventListener('click', handleBackBtn);
-let olEl = document.querySelector('ol');
-console.log(olEl);
+let olEl = document.querySelector("ol");
 
 function handleBackBtn() {
     location.replace('index.html');
